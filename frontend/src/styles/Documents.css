@@ -1,0 +1,118 @@
+/* ===============================
+   DOCUMENTS PAGE – PROFESSIONAL UI
+   =============================== */
+
+.page {
+  animation: fadeIn 0.5s ease-in;
+}
+
+h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+/* Document list container */
+.flex.flex-col.gap-3 {
+  margin-top: 1rem;
+}
+
+/* Individual document card */
+.border.p-4.rounded.shadow-sm {
+  background: linear-gradient(180deg, #ffffff, #f9fafb);
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+/* Hover effect */
+.border.p-4.rounded.shadow-sm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  border-color: #c7d2fe;
+}
+
+/* Left content */
+.border.p-4.rounded.shadow-sm p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+/* Title emphasis */
+.border.p-4.rounded.shadow-sm p strong {
+  color: #111827;
+}
+
+/* Document title look */
+.border.p-4.rounded.shadow-sm p:first-child {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Right metadata column */
+.border.p-4.rounded.shadow-sm::after {
+  content: "📄";
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  font-size: 1.4rem;
+  opacity: 0.35;
+}
+
+/* Meta badges (versions, comments) */
+.border.p-4.rounded.shadow-sm p:nth-last-child(2),
+.border.p-4.rounded.shadow-sm p:last-child {
+  display: inline-block;
+  background: #eef2ff;
+  color: #4338ca;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+/* Owner badge */
+.border.p-4.rounded.shadow-sm p:nth-child(3) {
+  display: inline-block;
+  background: #ecfeff;
+  color: #0369a1;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+/* Empty state (if no docs later) */
+.empty-docs {
+  text-align: center;
+  padding: 40px;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .border.p-4.rounded.shadow-sm {
+    grid-template-columns: 1fr;
+  }
+}

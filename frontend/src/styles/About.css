@@ -1,0 +1,145 @@
+.about-container {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: #e5e7eb;
+  padding: 80px 20px;
+}
+
+/* HERO */
+.about-hero {
+  max-width: 900px;
+  margin: 0 auto 80px;
+  text-align: center;
+  animation: fadeIn 1.2s ease forwards;
+}
+
+.about-hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.about-hero h1 span {
+  background: linear-gradient(90deg, #38bdf8, #22c55e);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.about-hero p {
+  margin-top: 18px;
+  font-size: 1.1rem;
+  color: #cbd5f5;
+}
+
+/* SECTIONS */
+.about-section {
+  max-width: 1000px;
+  margin: 0 auto 70px;
+  animation: slideUp 1s ease forwards;
+}
+
+.about-section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.about-section p {
+  color: #cbd5f5;
+  line-height: 1.7;
+}
+
+/* GRID */
+.about-section.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+}
+
+/* CARDS */
+.about-card {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 16px;
+  padding: 28px;
+  transition: all 0.4s ease;
+}
+
+.about-card h3 {
+  margin-bottom: 12px;
+  font-size: 1.25rem;
+}
+
+.about-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.about-card ul li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.about-card ul li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: #38bdf8;
+}
+
+/* CARD HOVER EFFECT */
+.about-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(56,189,248,0.2);
+}
+
+/* TECH STACK */
+.tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.tech span {
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: #020617;
+  border: 1px solid #1e293b;
+  font-size: 0.9rem;
+}
+
+/* FOOTER */
+.about-footer {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  border-top: 1px solid #1e293b;
+  padding-top: 30px;
+  color: #94a3b8;
+  animation: fadeIn 1.5s ease forwards;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

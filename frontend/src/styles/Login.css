@@ -1,0 +1,162 @@
+/* =========================
+   PAGE BACKGROUND
+   ========================= */
+
+.center-box {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.06), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(255,255,255,0.04), transparent 40%),
+    #020617;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Soft ambient light */
+.center-box::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 50%;
+  filter: blur(140px);
+  top: -140px;
+  left: -140px;
+  animation: floatSlow 18s infinite alternate ease-in-out;
+}
+
+@keyframes floatSlow {
+  to {
+    transform: translate(80px, 60px);
+  }
+}
+
+/* =========================
+   SINGLE LOGIN CARD
+   ========================= */
+
+.center-box {
+  flex-direction: column;
+}
+
+.center-box h2,
+.center-box form {
+  width: 100%;
+}
+
+.center-box h2 {
+  display: none; /* hide raw h2, we'll restyle inside form */
+}
+
+.center-box form {
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  max-width: 420px;
+  padding: 44px 38px;
+  border-radius: 18px;
+  box-shadow: 0 40px 90px rgba(0,0,0,0.5);
+  animation: cardEnter 0.7s ease;
+  z-index: 1;
+}
+
+/* Entry animation */
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================
+   TITLE INSIDE CARD
+   ========================= */
+
+.center-box form::before {
+  content: "Login";
+  display: block;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #020617;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.center-box form::after {
+  content: "Sign in to your account";
+  display: block;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 28px;
+}
+
+/* =========================
+   FORM
+   ========================= */
+
+.center-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Inputs */
+.center-box input {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #f8fafc;
+  font-size: 0.95rem;
+  transition: 0.25s;
+}
+
+.center-box input::placeholder {
+  color: #94a3b8;
+}
+
+.center-box input:focus {
+  outline: none;
+  background: white;
+  border-color: #020617;
+  box-shadow: 0 0 0 3px rgba(2,6,23,0.15);
+}
+
+/* =========================
+   BUTTON
+   ========================= */
+
+.center-box button {
+  margin-top: 8px;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: #020617;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.center-box button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(2,6,23,0.35);
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 480px) {
+  .center-box form {
+    padding: 34px 24px;
+  }
+}

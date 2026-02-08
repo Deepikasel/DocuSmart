@@ -1,0 +1,78 @@
+/* NAVBAR CONTAINER */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background-color: #0f172a;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* LOGO */
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(90deg, #38bdf8, #22c55e);
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+/* NAV LINKS */
+.nav-links {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li a,
+.nav-links li button {
+  color: white;
+  text-decoration: none; /* remove underline */
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-links li a:hover,
+.nav-links li button:hover {
+  background: #1e293b;
+  color: #38bdf8;
+}
+
+/* LOGIN / BUTTON STYLE */
+.nav-btn {
+  background: linear-gradient(90deg, #22c55e, #38bdf8);
+  color: #020617;
+  font-weight: 600;
+  border-radius: 30px;
+  padding: 6px 16px;
+}
+
+.nav-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(56,189,248,0.3);
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 768px) {
+  .nav-links {
+    gap: 15px;
+  }
+
+  .navbar {
+    padding: 10px 20px;
+  }
+}
