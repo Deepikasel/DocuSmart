@@ -1,9 +1,7 @@
-
-
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api"
+  baseURL: "https://docusmart-y7qn.onrender.com/api"
 });
 
 // 🔥 Attach token automatically to every request
