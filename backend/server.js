@@ -20,6 +20,7 @@ app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/documents", require("./routes/documentRoutes"));
 app.use("/api/activity", require("./routes/activityRoutes"));
 app.use("/api/comments", require("./routes/commentRoutes"));
+app.use("/api/chat", require("./routes/chatRoutes"));
 
 app.get("/", (req, res) => {
   res.send("DOCUSMART Backend Running 🚀");

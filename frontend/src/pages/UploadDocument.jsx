@@ -39,32 +39,54 @@ export default function UploadDocument() {
 
   return (
     <div className="upload-container">
-      <h2>Upload Document</h2>
+      {/* DOCUMENT FLOAT BACKGROUND */}
+      <div className="doc-bg">
+        <div className="doc-sheet one"></div>
+        <div className="doc-sheet two small rotate"></div>
+        <div className="doc-sheet three"></div>
+        <div className="doc-sheet four small rotate"></div>
+        <div className="doc-sheet five"></div>
+      </div>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          required
-          onChange={(e) => setTitle(e.target.value)}
-        />
+      {/* HERO */}
+      <section className="upload-hero">
+        <h1>Upload <span>Document</span></h1>
+        <p>Easily upload your documents and manage versions securely.</p>
+      </section>
 
-        <input
-          type="text"
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
+      {/* FORM */}
+      <section className="upload-form-section">
+        <form onSubmit={handleSubmit} className="upload-form">
+          <div className="field">
+            <input
+              type="text"
+              placeholder="Title"
+              value={title}
+              required
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
 
-        <input
-          type="file"
-          required
-          onChange={(e) => setFile(e.target.files[0])}
-        />
+          <div className="field">
+            <input
+              type="text"
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
 
-        <button type="submit">Upload</button>
-      </form>
+          <div className="field">
+            <input
+              type="file"
+              required
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+          </div>
+
+          <button type="submit">Upload</button>
+        </form>
+      </section>
     </div>
   );
 }

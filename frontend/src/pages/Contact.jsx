@@ -20,37 +20,44 @@ export default function Contact() {
 
   return (
     <div className="contact-container">
+
+      {/* DOCUMENT BACKGROUND – DIFFERENT ANIMATION */}
+      <div className="doc-bg">
+        <div className="doc-sheet pulse one"></div>
+        <div className="doc-sheet slide two small"></div>
+        <div className="doc-sheet pulse three rotate"></div>
+        <div className="doc-sheet slide four"></div>
+        <div className="doc-sheet pulse five small"></div>
+      </div>
+
       {/* HERO */}
       <section className="contact-hero">
         <h1>
           Get in <span>Touch</span>
         </h1>
         <p>
-          Questions about DocuSmart, feedback, or feature requests? 
+          Questions about DocuSmart, feedback, or feature requests?
           Reach out and we’ll get back to you.
         </p>
       </section>
 
       {/* CONTENT */}
       <section className="contact-content">
-        {/* INFO */}
         <div className="contact-info">
           <h2>Reach Me</h2>
           <p>
             DocuSmart streamlines document management for Users, Reviewers, and Admins.
-            Whether it’s about uploading, reviewing, or system management, your feedback
-            helps us make it better.
+            Your feedback helps us improve the platform.
           </p>
 
           <ul>
             <li>📧 Email: support@docusmart.app</li>
-            <li>🌍 Global platform for teams and organizations</li>
-            <li>🔐 Secure, role-based access and data privacy</li>
-            <li>💡 Suggestions for new features are welcome!</li>
+            <li>🌍 Global collaboration platform</li>
+            <li>🔐 Secure & role-based access</li>
+            <li>💡 Feature suggestions welcome</li>
           </ul>
         </div>
 
-        {/* FORM */}
         <form className="contact-form" onSubmit={handleSubmit}>
           <div className="field">
             <label>Your Name</label>
@@ -87,9 +94,7 @@ export default function Contact() {
             />
           </div>
 
-          <button type="submit">
-            Send Message →
-          </button>
+          <button type="submit">Send Message →</button>
         </form>
       </section>
     </div>

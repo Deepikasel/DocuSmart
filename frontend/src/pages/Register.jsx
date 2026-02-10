@@ -25,20 +25,36 @@ export default function Register() {
   };
 
   return (
-    <div className="register-page">
-      <div className="register-card">
-        <h2>Register</h2>
+    <div className="center-box">
+      {/* FLOATING DOCUMENT BACKGROUND */}
+      <div className="doc-bg">
+        <div className="doc-sheet one"></div>
+        <div className="doc-sheet two rotate"></div>
+        <div className="doc-sheet three small"></div>
+        <div className="doc-sheet four"></div>
+        <div className="doc-sheet five small rotate"></div>
+      </div>
 
-        <form onSubmit={submit} className="register-form">
+      {/* REGISTER CARD */}
+      <div className="login-card">
+        <div className="login-title">Create Account</div>
+        <div className="login-subtitle">
+          Join DocuSmart and start managing documents
+        </div>
+
+        <form onSubmit={submit}>
           <input
-            placeholder="Name"
+            placeholder="Full Name"
+            required
             onChange={(e) =>
               setForm({ ...form, name: e.target.value })
             }
           />
 
           <input
+            type="email"
             placeholder="Email"
+            required
             onChange={(e) =>
               setForm({ ...form, email: e.target.value })
             }
@@ -47,6 +63,8 @@ export default function Register() {
           <input
             type="password"
             placeholder="Password"
+            autoComplete="new-password"
+            required
             onChange={(e) =>
               setForm({ ...form, password: e.target.value })
             }
@@ -63,12 +81,15 @@ export default function Register() {
             <option value="admin">Admin</option>
           </select>
 
-          <button>Register</button>
+          <button type="submit">Register</button>
         </form>
 
-        <p className="register-footer">
-          <button onClick={() => navigate("/login")}>Login</button>
-        </p>
+        <div className="create-account">
+          Already have an account?{" "}
+          <span onClick={() => navigate("/login")}>
+            Login
+          </span>
+        </div>
       </div>
     </div>
   );

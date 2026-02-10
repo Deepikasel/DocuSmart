@@ -1,16 +1,91 @@
-.about-container {
-  min-height: 100vh;
-  background: radial-gradient(circle at top, #0f172a, #020617);
-  color: #e5e7eb;
-  padding: 80px 20px;
+/* =========================
+   GENERAL
+========================= */
+
+/* =========================
+   DOCUMENT BACKGROUND FLOAT
+========================= */
+.doc-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
 }
 
-/* HERO */
+.doc-sheet {
+  position: absolute;
+  width: 140px;
+  height: 180px;
+  background: #f8fafc;
+  border: 1px solid #c7d2fe;
+  border-radius: 10px;
+  box-shadow: 0 20px 40px rgba(30,64,175,0.15);
+  opacity: 0.45;
+  animation: docFloat 20s linear infinite;
+}
+
+.doc-sheet::before {
+  content: "";
+  position: absolute;
+  top: 24px;
+  left: 18px;
+  right: 18px;
+  height: 6px;
+  background: #c7d2fe;
+  border-radius: 4px;
+  box-shadow:
+    0 16px #c7d2fe,
+    0 32px #c7d2fe,
+    0 48px #c7d2fe;
+}
+
+.doc-sheet.small {
+  width: 110px;
+  height: 150px;
+  opacity: 0.35;
+}
+
+.doc-sheet.rotate {
+  transform: rotate(-8deg);
+}
+
+.doc-sheet.one { left: 8%; animation-delay: 0s; }
+.doc-sheet.two { left: 25%; animation-delay: 5s; }
+.doc-sheet.three { left: 50%; animation-delay: 10s; }
+.doc-sheet.four { left: 72%; animation-delay: 15s; }
+.doc-sheet.five { left: 90%; animation-delay: 18s; }
+
+.about-container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f1f5f9, #e2e8f0);
+  color: #0f172a;
+  padding: 90px 20px;
+  font-family: "Poppins", sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* subtle grid background */
+.about-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(15,23,42,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15,23,42,0.05) 1px, transparent 1px);
+  background-size: 42px 42px;
+  pointer-events: none;
+}
+
+/* =========================
+   HERO
+========================= */
 .about-hero {
   max-width: 900px;
-  margin: 0 auto 80px;
+  margin: 0 auto 90px;
   text-align: center;
-  animation: fadeIn 1.2s ease forwards;
+  animation: fadeInUp 1s ease forwards;
 }
 
 .about-hero h1 {
@@ -19,121 +94,130 @@
 }
 
 .about-hero h1 span {
-  background: linear-gradient(90deg, #38bdf8, #22c55e);
+  background: linear-gradient(90deg, #2563eb, #0ea5e9);
   -webkit-background-clip: text;
   color: transparent;
 }
 
 .about-hero p {
   margin-top: 18px;
-  font-size: 1.1rem;
-  color: #cbd5f5;
+  font-size: 1.15rem;
+  color: #475569;
+  line-height: 1.7;
 }
 
-/* SECTIONS */
+/* =========================
+   SECTIONS
+========================= */
 .about-section {
   max-width: 1000px;
-  margin: 0 auto 70px;
-  animation: slideUp 1s ease forwards;
+  margin: 0 auto 80px;
+  animation: fadeInUp 1s ease forwards;
 }
 
 .about-section h2 {
   font-size: 2rem;
   margin-bottom: 20px;
+  color: #1e3a8a;
 }
 
 .about-section p {
-  color: #cbd5f5;
+  color: #334155;
   line-height: 1.7;
 }
 
-/* GRID */
+/* =========================
+   GRID
+========================= */
 .about-section.grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 34px;
 }
 
-/* CARDS */
+/* =========================
+   CARDS
+========================= */
 .about-card {
-  background: #020617;
-  border: 1px solid #1e293b;
-  border-radius: 16px;
-  padding: 28px;
-  transition: all 0.4s ease;
+  background: #ffffff;
+  border: 1px solid #c7d2fe;
+  border-radius: 20px;
+  padding: 32px 28px;
+  box-shadow: 0 15px 35px rgba(30,64,175,0.18);
+  transition: 0.35s ease;
 }
 
 .about-card h3 {
-  margin-bottom: 12px;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
+  margin-bottom: 14px;
+  color: #1e3a8a;
 }
 
+/* list reset */
 .about-card ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.about-card ul li {
+.about-card li {
   position: relative;
-  padding-left: 22px;
-  margin-bottom: 10px;
-  line-height: 1.5;
+  padding-left: 24px;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  color: #334155;
 }
 
-.about-card ul li::before {
+.about-card li::before {
   content: "✔";
   position: absolute;
   left: 0;
-  color: #38bdf8;
+  color: #2563eb;
 }
 
-/* CARD HOVER EFFECT */
+/* hover */
 .about-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(56,189,248,0.2);
+  transform: translateY(-10px);
+  box-shadow: 0 22px 45px rgba(37,99,235,0.35);
 }
 
-/* TECH STACK */
+/* =========================
+   TECH STACK
+========================= */
 .tech {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-top: 16px;
+  margin-top: 18px;
 }
 
 .tech span {
-  padding: 8px 16px;
+  padding: 8px 18px;
   border-radius: 20px;
-  background: #020617;
-  border: 1px solid #1e293b;
+  background: #ffffff;
+  border: 1px solid #c7d2fe;
   font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 8px 20px rgba(30,64,175,0.15);
 }
 
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 .about-footer {
   max-width: 900px;
   margin: 0 auto;
   text-align: center;
-  border-top: 1px solid #1e293b;
-  padding-top: 30px;
-  color: #94a3b8;
-  animation: fadeIn 1.5s ease forwards;
+  border-top: 1px solid #c7d2fe;
+  padding-top: 40px;
+  color: #475569;
+  animation: fadeInUp 1.2s ease forwards;
 }
 
-/* ANIMATIONS */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideUp {
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translateY(40px);
@@ -141,5 +225,18 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+  .about-hero h1 {
+    font-size: 2.3rem;
+  }
+
+  .about-section h2 {
+    font-size: 1.6rem;
   }
 }

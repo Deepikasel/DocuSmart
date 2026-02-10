@@ -1,0 +1,103 @@
+/* Floating wrapper inside document card */
+.doc-chatbot-wrapper {
+  position: relative;
+}
+
+/* Floating action button (circle) */
+.doc-chatbot-fab {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
+  color: white;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Chat panel */
+.doc-chatbot-panel {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  width: 320px;
+  background: #020617;
+  color: white;
+  border-radius: 14px;
+  padding: 10px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  z-index: 100;
+}
+
+/* Header */
+.doc-chatbot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+/* Messages */
+.doc-chatbot-messages {
+  max-height: 220px;
+  overflow-y: auto;
+  margin-bottom: 8px;
+}
+
+/* Chat bubbles */
+.bubble {
+  padding: 8px 10px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  max-width: 85%;
+}
+
+.bubble.user {
+  background: #2563eb;
+  margin-left: auto;
+  text-align: right;
+}
+
+.bubble.bot {
+  background: #334155;
+}
+
+/* Typing animation */
+.typing span {
+  animation: blink 1.4s infinite both;
+}
+
+.typing span:nth-child(2) { animation-delay: .2s; }
+.typing span:nth-child(3) { animation-delay: .4s; }
+
+@keyframes blink {
+  0% { opacity: .2; }
+  20% { opacity: 1; }
+  100% { opacity: .2; }
+}
+
+/* Suggestions */
+.doc-chatbot-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.doc-chatbot-suggestions button {
+  font-size: 11px;
+  background: #1e293b;
+  color: white;
+  border-radius: 14px;
+  padding: 4px 10px;
+  border: none;
+  cursor: pointer;
+}

@@ -4,7 +4,8 @@ import React, { useState, useContext } from "react";
 import API from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import '../styles/Login.css'
+import "../styles/Login.css";
+
 export default function Login() {
   const { loginUser } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -20,7 +21,6 @@ export default function Login() {
     try {
       const res = await API.post("/auth/login", form);
 
-      // ✅ CORRECT DATA SHAPE
       loginUser({
         token: res.data.token,
         user: {
@@ -39,26 +39,58 @@ export default function Login() {
 
   return (
     <div className="center-box">
-      <h2>Login</h2>
+      {/* FLOATING DOCUMENT BACKGROUND */}
+      <div className="doc-bg">
+        <div className="doc-sheet one"></div>
+        <div className="doc-sheet two rotate"></div>
+        <div className="doc-sheet three small"></div>
+        <div className="doc-sheet four"></div>
+        <div className="doc-sheet five small rotate"></div>
+      </div>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Email"
-          onChange={(e) =>
-            setForm({ ...form, email: e.target.value })
-          }
-        />
+      {/* LOGIN CARD */}
+      <div className="login-card">
+        <div className="login-title">Welcome Back</div>
+        <div className="login-subtitle">
+          Sign in to continue to your account
+        </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(e) =>
-            setForm({ ...form, password: e.target.value })
-          }
-        />
+        <div className="role-info">
+          <span>User</span>
+          <span>Reviewer</span>
+          <span>Admin</span>
+        </div>
 
-        <button type="submit">Login</button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Email"
+            required
+            onChange={(e) =>
+              setForm({ ...form, email: e.target.value })
+            }
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            autoComplete="current-password"
+            required
+            onChange={(e) =>
+              setForm({ ...form, password: e.target.value })
+            }
+          />
+
+          <button type="submit">Login</button>
+        </form>
+
+        <div className="create-account">
+          Don’t have an account?{" "}
+          <span onClick={() => navigate("/register")}>
+            Create Account
+          </span>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,28 @@
+.chatbox {
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+}
+
+.chatbox input {
+  width: 80%;
+  padding: 6px;
+}
+
+.chatbox button {
+  margin: 4px;
+}
+
+.messages {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.user {
+  color: #333;
+}
+
+.bot {
+  color: #0066cc;
+}

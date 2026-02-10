@@ -124,6 +124,50 @@ exports.resummarize = async (req, res) => {
   }
 };
 
+/* ================= DELETE VERSION ================= */
+exports.deleteDocumentVersion = async (req, res) => {
+  try {
+    const { id, versionNumber } = req.params;
+
+    const document = await Document.findById(id);
+    if (!document) {
+      return res.status(404).json({ message: "Document not found" });
+    }
+
+    // Only owner or admin can delete versions
+    if (
+      req.user.role !== "admin" &&
+      document.owner.toString() !== req.user._id.toString()
+    ) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
+
+    // Do not allow deleting last remaining version
+    if (document.versions.length === 1) {
+      return res
+        .status(400)
+        .json({ message: "Cannot delete the only version" });
+    }
+
+    const versionIndex = document.versions.findIndex(
+      v => v.versionNumber === Number(versionNumber)
+    );
+
+    if (versionIndex === -1) {
+      return res.status(404).json({ message: "Version not found" });
+    }
+
+    document.versions.splice(versionIndex, 1);
+    await document.save();
+
+    res.json({ message: "Version deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Delete version failed" });
+  }
+};
+
+
 /* ================= DELETE ================= */
 exports.deleteDocument = async (req, res) => {
   try {

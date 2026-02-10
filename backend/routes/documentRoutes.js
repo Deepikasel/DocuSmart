@@ -6,8 +6,10 @@ const {
   getDocuments,
   getDocumentById,
   resummarize,
-  deleteDocument
+  deleteDocument,
+  deleteDocumentVersion
 } = require("../controllers/documentController");
+
 
 // ✅ FIX IS HERE (authMiddleware, NOT auth)
 const protect = require("../middleware/authMiddleware");
@@ -19,6 +21,12 @@ router.post("/", protect, upload.single("file"), uploadDocument);
 router.get("/", protect, getDocuments);
 router.get("/:id", protect, getDocumentById);
 router.post("/resummarize/:id", protect, resummarize);
+router.delete(
+  "/:id/version/:versionNumber",
+  protect,
+  deleteDocumentVersion
+);
+
 router.delete("/:id", protect, deleteDocument);
 
 module.exports = router;

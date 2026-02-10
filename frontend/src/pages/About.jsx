@@ -5,6 +5,13 @@ export default function About() {
   return (
     <div className="about-container">
       {/* HERO */}
+       <div className="doc-bg">
+    <div className="doc-sheet one"></div>
+    <div className="doc-sheet two small rotate"></div>
+    <div className="doc-sheet three"></div>
+    <div className="doc-sheet four small"></div>
+    <div className="doc-sheet five rotate"></div>
+  </div>
       <section className="about-hero">
         <h1>
           About <span>DocuSmart</span>

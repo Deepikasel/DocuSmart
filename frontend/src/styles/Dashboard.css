@@ -1,195 +1,94 @@
 /* ================= PAGE ================= */
 .dashboard-container {
-  background: #020617;          /* dark background */
+  background: #020617;
   min-height: 100vh;
   padding: 24px;
   color: #ffffff;
   font-family: 'Inter', sans-serif;
 }
 
-/* TITLE */
-.dashboard-container h2 {
-  color: #38bdf8;
+/* HEADER */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 24px;
+}
+
+.dashboard-header h2 {
+  color: #38bdf8;
   font-size: 2.2rem;
   font-weight: 700;
-  text-transform: uppercase;
+}
+
+/* UPLOAD BUTTON */
+.upload-btn {
+  background: #2563eb;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
 }
 
 /* ================= DOCUMENT CARD ================= */
 .doc-card {
-  background: #f8fafc;          /* light card */
-  color: #020617;               /* dark text */
+  background: #f8fafc;
+  color: #020617;
   border-radius: 16px;
   padding: 20px;
   margin-bottom: 24px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.doc-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 15px 25px rgba(0,0,0,0.45);
-}
-
-/* TITLE */
-.doc-card h3 {
-  color: #1e3a8a;
-  margin-bottom: 8px;
-  font-size: 1.4rem;
-  font-weight: 600;
-}
-
-/* TEXT */
-.doc-card p {
-  color: #020617;
-  line-height: 1.6;
-  margin-top: 6px;
-}
-
-/* LABELS */
-.doc-card b {
-  color: #047857;
-}
-
-/* ================= SUMMARY BOX ================= */
-.doc-card p.summary {
-  background: #e0f2fe;           /* light blue */
+/* ================= SUMMARY ================= */
+.summary-box {
+  background: #e0f2fe;
   border-left: 5px solid #0284c7;
   padding: 14px;
-  margin-top: 12px;
-  font-size: 15px;
-  border-radius: 6px;
+  margin: 12px 0;
+  border-radius: 8px;
+}
+
+.summary-box h4 {
+  margin-bottom: 8px;
+  color: #075985;
+}
+
+.summary-box ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.summary-box li {
+  margin-bottom: 6px;
+  font-size: 14px;
 }
 
 /* ================= BUTTONS ================= */
 button {
   background: #1e293b;
-  color: #ffffff;
+  color: white;
   border: none;
-  padding: 8px 16px;
-  margin-right: 8px;
-  margin-top: 12px;
+  padding: 8px 14px;
+  margin: 8px 6px 0 0;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s ease;
 }
+
+.view-btn { background: #10b981; }
+.nav-btn { background: #6b7280; }
+.resummarize-btn { background: #2563eb; }
+.delete-btn { background: #dc2626; }
+.comment-btn { background: #fbbf24; color: #020617; }
 
 button:hover {
-  background: #334155;
+  opacity: 0.9;
 }
 
-/* DELETE BUTTON */
-button.delete-btn {
-  background: #dc2626;
-  color: #ffffff;
-}
-
-button.delete-btn:hover {
-  background: #b91c1c;
-}
-
-/* RESUMMARIZE BUTTON */
-button.resummarize-btn {
-  background: #2563eb;
-}
-
-button.resummarize-btn:hover {
-  background: #1e40af;
-}
-
-/* VIEW BUTTON */
-button.view-btn {
-  background: #10b981;
-}
-
-button.view-btn:hover {
-  background: #047857;
-}
-
-/* PREV/NEXT BUTTON */
-button.nav-btn {
-  background: #6b7280;
-}
-
-button.nav-btn:hover {
-  background: #4b5563;
-}
-
-/* COMMENT BUTTON */
-button.comment-btn {
-  background: #fbbf24;
-  color: #020617;
-}
-
-button.comment-btn:hover {
-  background: #f59e0b;
-}
-
-/* ================= TEXTAREA ================= */
-textarea {
-  width: 100%;
-  min-height: 90px;
-  margin-top: 12px;
-  padding: 12px;
-  background: #ffffff;
-  color: #020617;
-  border: 1px solid #94a3b8;
-  border-radius: 8px;
-  font-size: 14px;
-  resize: vertical;
-}
-
-textarea::placeholder {
-  color: #64748b;
-}
-
-/* ================= COMMENTS BOX ================= */
+/* ================= COMMENTS ================= */
 .comments-box {
   background: #ecfeff;
   border-left: 5px solid #06b6d4;
   padding: 14px;
   margin-top: 16px;
   border-radius: 8px;
-}
-
-.comments-box h4 {
-  margin-bottom: 10px;
-  color: #0284c7;
-  font-weight: 600;
-}
-
-.comments-box p {
-  color: #020617;
-  margin-bottom: 6px;
-}
-
-.comments-box b {
-  color: #0f766e;
-}
-
-/* ================= MODAL ================= */
-iframe {
-  background: white;
-  width: 100%;
-  height: 80vh;
-  border-radius: 12px;
-  border: none;
-}
-
-/* ================= RESPONSIVE ================= */
-@media (max-width: 900px) {
-  .doc-card {
-    padding: 16px;
-  }
-
-  button {
-    padding: 6px 12px;
-    margin-top: 8px;
-  }
-
-  .comments-box {
-    padding: 12px;
-  }
 }

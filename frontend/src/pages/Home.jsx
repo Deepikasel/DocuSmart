@@ -8,6 +8,15 @@ export default function Home() {
   return (
     <div className="home-container">
       {/* HERO SECTION */}
+      {/* BACKGROUND DOCUMENT ANIMATION */}
+<div className="doc-bg">
+  <div className="doc-sheet one"></div>
+  <div className="doc-sheet two small rotate"></div>
+  <div className="doc-sheet three"></div>
+  <div className="doc-sheet four small"></div>
+  <div className="doc-sheet five rotate"></div>
+</div>
+
       <section className="hero">
         <div className="hero-content">
           <h1 className="hero-title">
