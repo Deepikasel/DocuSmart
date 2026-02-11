@@ -1,69 +1,60 @@
 const Document = require("../models/Document");
-const ChatHistory = require("../models/ChatHistory");
 
+// ================= ASK CHATBOT =================
 exports.askChatbot = async (req, res) => {
   try {
     const { documentId, question } = req.body;
 
-    const doc = await Document.findById(documentId);
+    const doc = await Document.findById(documentId).populate("owner", "name");
     if (!doc) return res.status(404).json({ message: "Document not found" });
 
     const latest = doc.versions.at(-1);
 
-  const suggestions = [
-  "📄 What is this document about?",
-  "📝 Give me a short summary",
-  "🏷️ What is the document title?",
-  "📌 What is the purpose of this document?",
-  "🕒 Which version is this?",
-  "📅 When was it last updated?",
-  "🔍 What are the key points?",
-  "👤 Who created this document?"
-];
+    const suggestedQuestions = [
+      "What is this document about?",
+      "Give me a short summary",
+      "Who created this document?",
+      "Which version is this?",
+      "What are the key points?"
+    ];
 
-
-
-    // 👉 First load (no question)
+    // FIRST LOAD (no question)
     if (!question) {
-     const greeting = `Hi 👋 Welcome to DocuSmart!
-
-I can help you understand this document 📄  
-Just tap one of the questions below 👇`;
-
-
       return res.json({
-        answer: greeting,
-        suggestedQuestions: suggestions
+        answer: `Hi 👋  
+I can help you understand this document.
+
+Choose a question below 👇`,
+        suggestedQuestions
       });
     }
 
+    const q = question.toLowerCase();
     let answer = "";
 
-    if (question.toLowerCase().includes("summary")) {
-      answer = latest.summary;
-    } else if (question.toLowerCase().includes("title")) {
-      answer = doc.title;
-    } else if (question.toLowerCase().includes("version")) {
-      answer = `This is version ${latest.versionNumber}`;
-    } else {
-      answer = "Please choose a suggested question related to this document.";
+    if (q.includes("summary")) {
+      answer = latest.summary.join("\n• ");
+    } 
+    else if (q.includes("about")) {
+      answer = latest.summary.slice(0, 2).join(" ");
+    } 
+    else if (q.includes("creator")) {
+      answer = `This document was created by ${doc.owner?.name}`;
+    } 
+    else if (q.includes("version")) {
+      answer = `You are viewing version ${latest.versionNumber}`;
+    } 
+    else if (q.includes("key")) {
+      answer = latest.summary.join("\n• ");
+    } 
+    else {
+      answer = "Please select one of the suggested questions.";
     }
 
-    // 💾 Save chat
-    await ChatHistory.findOneAndUpdate(
-      { documentId },
-      {
-        $push: {
-          messages: [
-            { from: "user", text: question },
-            { from: "bot", text: answer }
-          ]
-        }
-      },
-      { upsert: true }
-    );
-
-    res.json({ answer, suggestedQuestions: suggestions });
+    res.json({
+      answer,
+      suggestedQuestions
+    });
 
   } catch (err) {
     console.error(err);

@@ -21,46 +21,39 @@ export default function DocumentChatbot({ documentId }) {
       setTyping(true);
       const res = await API.post("/chat/ask", { documentId });
       setTyping(false);
+
       setMessages([{ from: "bot", text: res.data.answer }]);
-      setSuggestions(res.data.suggestedQuestions || []);
+      setSuggestions(res.data.suggestedQuestions);
     })();
   }, [open, documentId]);
 
-  const ask = async (question) => {
-    setMessages(prev => [...prev, { from: "user", text: question }]);
+  const ask = async (q) => {
+    setMessages(p => [...p, { from: "user", text: q }]);
     setTyping(true);
 
     const res = await API.post("/chat/ask", {
       documentId,
-      question
+      question: q
     });
 
     setTyping(false);
-    setMessages(prev => [...prev, { from: "bot", text: res.data.answer }]);
-    setSuggestions(res.data.suggestedQuestions || []);
+    setMessages(p => [...p, { from: "bot", text: res.data.answer }]);
+    setSuggestions(res.data.suggestedQuestions);
   };
 
   return (
     <div className="doc-chatbot-wrapper">
-
-      {/* Floating Circle Button */}
-      <button
-        className="doc-chatbot-fab"
-        onClick={() => setOpen(o => !o)}
-      >
+      <button className="doc-chatbot-fab" onClick={() => setOpen(o => !o)}>
         🤖
       </button>
 
       {open && (
         <div className="doc-chatbot-panel">
-
-          {/* Header */}
           <div className="doc-chatbot-header">
             <span>DocuSmart Assistant</span>
             <button onClick={() => setOpen(false)}>✖</button>
           </div>
 
-          {/* Messages */}
           <div className="doc-chatbot-messages">
             {messages.map((m, i) => (
               <div key={i} className={`bubble ${m.from}`}>
@@ -68,26 +61,17 @@ export default function DocumentChatbot({ documentId }) {
               </div>
             ))}
 
-            {typing && (
-              <div className="bubble bot typing">
-                Typing<span>.</span><span>.</span><span>.</span>
-              </div>
-            )}
-
+            {typing && <div className="bubble bot">Typing...</div>}
             <div ref={chatEndRef} />
           </div>
 
-          {/* Suggestions */}
-          {suggestions.length > 0 && (
-            <div className="doc-chatbot-suggestions">
-              {suggestions.map((s, i) => (
-                <button key={i} onClick={() => ask(s)}>
-                  {s}
-                </button>
-              ))}
-            </div>
-          )}
-
+          <div className="doc-chatbot-suggestions">
+            {suggestions.map((s, i) => (
+              <button key={i} onClick={() => ask(s)}>
+                {s}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>

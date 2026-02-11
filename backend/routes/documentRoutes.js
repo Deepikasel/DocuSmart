@@ -1,32 +1,22 @@
 const express = require("express");
 const router = express.Router();
+const upload = require("../middleware/upload");
+const auth = require("../middleware/authMiddleware");
 
 const {
   uploadDocument,
   getDocuments,
-  getDocumentById,
   resummarize,
   deleteDocument,
-  deleteDocumentVersion
+  deleteDocumentVersion,
+  addComment
 } = require("../controllers/documentController");
 
-
-// ✅ FIX IS HERE (authMiddleware, NOT auth)
-const protect = require("../middleware/authMiddleware");
-
-const upload = require("../middleware/upload");
-
-/* ROUTES */
-router.post("/", protect, upload.single("file"), uploadDocument);
-router.get("/", protect, getDocuments);
-router.get("/:id", protect, getDocumentById);
-router.post("/resummarize/:id", protect, resummarize);
-router.delete(
-  "/:id/version/:versionNumber",
-  protect,
-  deleteDocumentVersion
-);
-
-router.delete("/:id", protect, deleteDocument);
+router.post("/", auth, upload.single("file"), uploadDocument);
+router.get("/", auth, getDocuments);
+router.post("/resummarize/:id", auth, resummarize);
+router.post("/:id/comment", auth, addComment); // ✅ NEW
+router.delete("/:id", auth, deleteDocument);
+router.delete("/:id/version/:versionNumber", auth, deleteDocumentVersion);
 
 module.exports = router;

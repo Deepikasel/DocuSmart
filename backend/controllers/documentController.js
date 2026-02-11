@@ -1,183 +1,126 @@
+const Document = require("../models/Document");
 const fs = require("fs");
 const path = require("path");
-const Document = require("../models/Document");
-const AuditLog = require("../models/AuditLog");
-const { extractTextFromFile, summarizeText } = require("../utils/summarizer");
+const { extractText, generateSummaryFromText } = require("../utils/summarizer");
 
-/* ================= UPLOAD ================= */
+/* ================= UPLOAD DOCUMENT ================= */
 exports.uploadDocument = async (req, res) => {
   try {
-    const file = req.file;
-    const { title, description } = req.body;
+    const filePath = path.join(__dirname, "..", "uploads", req.file.filename);
+    const content = await extractText(filePath);
+    const summary = generateSummaryFromText(content);
 
-    if (!file) {
-      return res.status(400).json({ message: "No file uploaded" });
-    }
-
-    const extractedText = await extractTextFromFile(file.path);
-    const summary = summarizeText(extractedText);
-
-    const document = await Document.create({
-      title,
-      description,
+    const doc = await Document.create({
+      title: req.body.title,
+      description: req.body.description,
       owner: req.user._id,
       versions: [
         {
           versionNumber: 1,
-          fileName: file.originalname,
-          fileUrl: `/uploads/${file.filename}`,
-          summary,
-          uploadedBy: req.user._id,
-          uploadedAt: new Date()
+          fileUrl: `uploads/${req.file.filename}`,
+          summary
         }
       ]
     });
 
-    res.status(201).json(document);
+    res.status(201).json(doc);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Upload failed" });
+    res.status(500).json({ message: err.message });
   }
 };
 
-/* ================= GET ALL ================= */
+/* ================= GET DOCUMENTS ================= */
 exports.getDocuments = async (req, res) => {
   try {
-    let docs;
+    let query = {};
 
-    if (req.user.role === "admin" || req.user.role === "reviewer") {
-      docs = await Document.find().sort({ createdAt: -1 });
-    } else {
-      docs = await Document.find({ owner: req.user._id }).sort({ createdAt: -1 });
+    // ✅ Admin & Reviewer → see ALL documents
+    if (req.user.role === "user") {
+      query = { owner: req.user._id };
     }
+
+    const docs = await Document.find(query)
+      .populate("owner", "name role")
+      .sort({ createdAt: -1 });
 
     res.json(docs);
   } catch (err) {
-    res.status(500).json({ message: "Fetch failed" });
-  }
-};
-
-/* ================= GET ONE ================= */
-exports.getDocumentById = async (req, res) => {
-  try {
-    const doc = await Document.findById(req.params.id);
-    if (!doc) return res.status(404).json({ message: "Not found" });
-
-    if (
-      req.user.role !== "admin" &&
-      req.user.role !== "reviewer" &&
-      doc.owner.toString() !== req.user._id.toString()
-    ) {
-      return res.status(403).json({ message: "Unauthorized" });
-    }
-
-    res.json(doc);
-  } catch (err) {
-    res.status(500).json({ message: "Fetch failed" });
+    res.status(500).json({ message: err.message });
   }
 };
 
 /* ================= RESUMMARIZE ================= */
 exports.resummarize = async (req, res) => {
   try {
-    const document = await Document.findById(req.params.id);
-    if (!document) return res.status(404).json({ message: "Not found" });
+    const doc = await Document.findById(req.params.id);
+    const last = doc.versions.at(-1);
 
-    if (
-      document.owner.toString() !== req.user._id.toString() &&
-      req.user.role !== "admin"
-    ) {
-      return res.status(403).json({ message: "Unauthorized" });
-    }
+    const filePath = path.join(__dirname, "..", last.fileUrl);
+    const content = await extractText(filePath);
+    const summary = generateSummaryFromText(content);
 
-    const latest = document.versions.at(-1);
+    doc.versions.push({
+      versionNumber: last.versionNumber + 1,
+      fileUrl: last.fileUrl,
+      summary
+    });
 
-    const filePath = path.join(
-      __dirname,
-      "..",
-      "uploads",
-      path.basename(latest.fileUrl)
-    );
-
-    if (!fs.existsSync(filePath)) {
-      return res.status(400).json({ message: "File missing on server" });
-    }
-
-    const extractedText = await extractTextFromFile(filePath);
-    const summary = summarizeText(extractedText);
-
-    const newVersion = {
-      versionNumber: document.versions.length + 1,
-      fileName: latest.fileName,
-      fileUrl: latest.fileUrl,
-      summary,
-      uploadedBy: req.user._id,
-      uploadedAt: new Date()
-    };
-
-    document.versions.push(newVersion);
-    await document.save();
-
-    res.json(newVersion);
+    await doc.save();
+    res.json({ message: "Resummarized successfully" });
   } catch (err) {
-    res.status(500).json({ message: "Re-summarize failed" });
+    res.status(500).json({ message: err.message });
   }
 };
 
 /* ================= DELETE VERSION ================= */
 exports.deleteDocumentVersion = async (req, res) => {
   try {
-    const { id, versionNumber } = req.params;
+    const doc = await Document.findById(req.params.id);
 
-    const document = await Document.findById(id);
-    if (!document) {
-      return res.status(404).json({ message: "Document not found" });
-    }
-
-    // Only owner or admin can delete versions
-    if (
-      req.user.role !== "admin" &&
-      document.owner.toString() !== req.user._id.toString()
-    ) {
-      return res.status(403).json({ message: "Unauthorized" });
-    }
-
-    // Do not allow deleting last remaining version
-    if (document.versions.length === 1) {
-      return res
-        .status(400)
-        .json({ message: "Cannot delete the only version" });
-    }
-
-    const versionIndex = document.versions.findIndex(
-      v => v.versionNumber === Number(versionNumber)
+    doc.versions = doc.versions.filter(
+      v => v.versionNumber !== Number(req.params.versionNumber)
     );
 
-    if (versionIndex === -1) {
-      return res.status(404).json({ message: "Version not found" });
-    }
-
-    document.versions.splice(versionIndex, 1);
-    await document.save();
-
-    res.json({ message: "Version deleted successfully" });
+    await doc.save();
+    res.json({ message: "Version deleted" });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Delete version failed" });
+    res.status(500).json({ message: err.message });
   }
 };
 
-
-/* ================= DELETE ================= */
+/* ================= DELETE DOCUMENT ================= */
 exports.deleteDocument = async (req, res) => {
   try {
-    if (req.user.role !== "admin") {
-      return res.status(403).json({ message: "Admins only" });
-    }
+    const doc = await Document.findById(req.params.id);
 
-    await Document.findByIdAndDelete(req.params.id);
+    doc.versions.forEach(v => {
+      const p = path.join(__dirname, "..", v.fileUrl);
+      if (fs.existsSync(p)) fs.unlinkSync(p);
+    });
+
+    await doc.deleteOne();
     res.json({ message: "Document deleted" });
   } catch (err) {
-    res.status(500).json({ message: "Delete failed" });
+    res.status(500).json({ message: err.message });
+  }
+};
+/* ================= ADD REVIEWER COMMENT ================= */
+exports.addComment = async (req, res) => {
+  try {
+    if (req.user.role !== "reviewer") {
+      return res.status(403).json({ message: "Only reviewers can comment" });
+    }
+
+    const doc = await Document.findById(req.params.id);
+
+    doc.comments.push({
+      reviewer: req.user._id,
+      comment: req.body.comment
+    });
+
+    await doc.save();
+    res.json({ message: "Comment added" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
